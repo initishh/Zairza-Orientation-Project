@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Main6Activity.class));
                 break;
             case 6:
-                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                startActivity(new Intent(getApplicationContext(), Main7Activity.class));
+
         }
         Log.i("Button Tapped", view.getTag().toString());
     }
