@@ -6,97 +6,107 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity {
 
-    private int player=1;
-    int[] gameState={2,2,2,2,2,2,2,2,2};
-    int[][] winnningState={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
-    public void playAgain(View view){
-        TextView textView=(TextView)findViewById(R.id.textView);
-        Button button=(Button)findViewById(R.id.button);
-        textView.setVisibility(View.INVISIBLE);
-        button.setVisibility(View.INVISIBLE);
+    int chance=0;
+    int score1=0;
+    int score2=0;
+    int check=1;
+    int state[]={2,2,2,2,2,2,2,2,2};
+    int winstates [][]= {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
 
-        player=1;
-        for(int i=0;i<gameState.length;i++)
-            gameState[i]=2;
-        ImageView img=(ImageView)findViewById(R.id.imageView2);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView3);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView4);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView5);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView6);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView7);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView8);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView9);
-        img.setImageResource(0);
-        img=(ImageView)findViewById(R.id.imageView10);
-        img.setImageResource(0);
 
+
+    public void reset(View view)
+    {
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.playagain);
+        layout.setVisibility(View.INVISIBLE);
+        chance =0;
+        check=1;
+        for(int i=0; i<state.length;i++)
+            state[i]=2;
+        android.support.v7.widget.GridLayout gridLayout = (android.support.v7.widget.GridLayout) findViewById(R.id.grid);
+        for(int i=0; i<gridLayout.getChildCount();i++)
+        {
+            ImageView img= (ImageView)gridLayout.getChildAt(i);
+            img.setImageResource(0);
+        }
     }
-    public void toggle(View view){
-        ImageView cross=(ImageView) view;
-        TextView textView=(TextView)findViewById(R.id.textView);
-        Button button=(Button)findViewById(R.id.button);
-        System.out.println(cross.getTag().toString());
-        int TappedPlayer=Integer.parseInt(cross.getTag().toString());
-        if(gameState[TappedPlayer]==2){
-            cross.setTranslationY(-1000f);
-            gameState[TappedPlayer]=player;
-            if(player==1)
-                cross.setImageResource(R.drawable.cross);
-            else
-                cross.setImageResource(R.drawable.circle);
-            int winner=0;
-            int flag=1;
-            cross.animate().translationYBy(1000f).rotation(360).setDuration(300) ;
 
-            for(int[] x:winnningState)
-            {
-                if(((gameState[x[0]]==gameState[x[1]])&&(gameState[x[1]]==gameState[x[2]]))&&(gameState[x[0]]!=2))
-                {
-                    flag=0;
-                    winner=gameState[x[0]];
-                    String Win;
-                    if(winner>0)
-                        Win="Cross";
-                    else
-                        Win="Zero";
-                    Log.i("info",Win+" has won");
-                    textView.setText(Win+" has won!");
-                    textView.setVisibility(View.VISIBLE);
-                    button.setVisibility(View.VISIBLE);
-                    for(int i=0;i<gameState.length;i++)
-                        gameState[i]=1;
-                    break;
+    public void ingame(View view) {
+        // true == tick   false == cross
+        TextView player1=(TextView) findViewById(R.id.player1);
+        TextView player2=(TextView) findViewById(R.id.player2);
+
+        if (check<=9) {
+            ImageView game = (ImageView) view;
+            if (state[Integer.parseInt(String.valueOf(game.getTag()))] == 2) {
+
+
+                state[Integer.parseInt(String.valueOf(game.getTag()))] = chance;
+                if (chance == 0) {
+                    game.setImageResource(R.drawable.tick);
+                    chance = 1;
+                } else {
+                    game.setImageResource(R.drawable.cross);
+                    chance = 0;
                 }
+                game.setScaleX(0f);
+                game.setScaleY(0f);
+                game.setRotation(0f);
+                game.animate().rotation(360)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(500);
+            } else {
+                check--;
+                Toast.makeText(this, "box already filled !!!! ", Toast.LENGTH_SHORT).show();
             }
-            int cnt=0;
-            for(int i=0;i<gameState.length;i++)
-                if(gameState[i]!=2)
-                    cnt++;
-            if(cnt==gameState.length&&flag==1)
-            {
-                textView.setText("Match Tied!");
-                textView.setVisibility(View.VISIBLE);
-                button.setVisibility(View.VISIBLE);
+
+            for (int gamestate[] : winstates) {
+                if (state[gamestate[0]] == state[gamestate[1]] && state[gamestate[1]] == state[gamestate[2]]
+                        && state[gamestate[0]] != 2) {
+                    TextView winnermessage = (TextView) findViewById(R.id.winnermessage);
+                    if (state[gamestate[0]] == 0) {
+                        Toast.makeText(this, "Player 1 striked player 2!!!!!", Toast.LENGTH_LONG).show();
+                        winnermessage.setText("Player 1 won !!!!");
+                        score1++;
+                    } else {
+                        Toast.makeText(this, "Player 2 circled Player 1!!!!!", Toast.LENGTH_LONG).show();
+                        winnermessage.setText("Player 2 won !!!!");
+                        score2++;
+                    }
+                    player1.setText("PLAYER 1 :"+ score1);
+                    player2.setText("PLAYER 2 :"+ score2);
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.playagain);
+                    layout.setVisibility(View.VISIBLE);
+                    check=11;
+                }
+
+            }
+
+            check++;
+            if(check==10) {
+                LinearLayout layout = (LinearLayout) findViewById(R.id.playagain);
+                TextView winnermessage =(TextView) findViewById(R.id.winnermessage);
+                winnermessage.setText("Match Draw !!!!");
+                layout.setVisibility(View.VISIBLE);
             }
         }
-        player*=-1;
+
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        Toast.makeText(this, "1st to play gets tick sign", Toast.LENGTH_LONG).show();
 
     }
 }
