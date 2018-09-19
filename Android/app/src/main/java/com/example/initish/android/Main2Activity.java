@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class Main2Activity extends AppCompatActivity {
         check=1;
         for(int i=0; i<state.length;i++)
             state[i]=2;
-        android.support.v7.widget.GridLayout gridLayout = (android.support.v7.widget.GridLayout) findViewById(R.id.grid);
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.grid);
         for(int i=0; i<gridLayout.getChildCount();i++)
         {
             ImageView img= (ImageView)gridLayout.getChildAt(i);
