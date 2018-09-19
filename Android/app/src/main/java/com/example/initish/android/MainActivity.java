@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Android Fun Project");
 
         button1=(Button)findViewById(R.id.button1);
         button2=(Button)findViewById(R.id.button2);
