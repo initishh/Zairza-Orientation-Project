@@ -23,14 +23,16 @@ public class Main4Activity extends AppCompatActivity {
     Boolean counterisactive=false;
     CountDownTimer countDownTimer;
     ImageView egg,hatched;
-
+    private int flag=0;
     @Override
     public void onBackPressed() {
-        mediaPlayer.stop();
+        if(flag==1)
+         mediaPlayer.stop();
         super.onBackPressed();
     }
 
     public void resetTimer(){
+        flag=1;
         textView.setText("0:10");
         seekBar.setProgress(10);
         countDownTimer.cancel();
@@ -41,6 +43,7 @@ public class Main4Activity extends AppCompatActivity {
         button.setVisibility(View.GONE);
         mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.bong);
         mediaPlayer.start();
+        flag=1;
         egg.setVisibility(View.GONE);
         hatched.setVisibility(View.VISIBLE);
     }
