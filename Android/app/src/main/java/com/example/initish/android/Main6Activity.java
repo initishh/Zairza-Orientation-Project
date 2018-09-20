@@ -36,8 +36,8 @@ public class Main6Activity extends AppCompatActivity {
         scoretext.setVisibility(View.VISIBLE);
         sumtext.setVisibility(View.VISIBLE);
         timertext.setVisibility(View.VISIBLE);
-
         generate();
+        play(findViewById(R.id.button));
     }
     public void play(View view){
         generate();
@@ -130,7 +130,6 @@ public class Main6Activity extends AppCompatActivity {
         instruction3=findViewById(R.id.instruction3);
         instruction4=findViewById(R.id.instruction4);
 
-        play(findViewById(R.id.button));
 
     }
     @Override
