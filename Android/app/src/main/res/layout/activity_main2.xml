@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#74b9ff"
     tools:context=".Main2Activity">
 
     <GridLayout
@@ -14,11 +15,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/board"
         android:columnCount="3"
+        android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.946"
-        android:rowCount="3">
+        app:layout_constraintVertical_bias="0.946">
 
 
         <ImageView

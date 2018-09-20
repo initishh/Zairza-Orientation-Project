@@ -15,14 +15,19 @@ public class Main6Activity extends AppCompatActivity {
 
 
     Button start, button0, button1, button2, button3,button;
-    TextView textView, scoretext, sumtext, timertext;
+    TextView textView, scoretext, sumtext, timertext,instruction1,instruction2,instruction3,instruction4,time,Score;
     ArrayList<Integer> answers = new ArrayList<Integer>();
     int locationofanswer, score = 0, numberofq = 0;
 
     public void start(View view) {
         start.setVisibility(View.INVISIBLE);
+        instruction1.setVisibility(View.INVISIBLE);
+        instruction2.setVisibility(View.INVISIBLE);
+        instruction3.setVisibility(View.INVISIBLE);
+        instruction4.setVisibility(View.INVISIBLE);
 
-        button.setVisibility(View.VISIBLE);
+        Score.setVisibility(View.VISIBLE);
+        time.setVisibility(View.VISIBLE);
         button0.setVisibility(View.VISIBLE);
         button1.setVisibility(View.VISIBLE);
         button2.setVisibility(View.VISIBLE);
@@ -55,6 +60,7 @@ public class Main6Activity extends AppCompatActivity {
                 button.setVisibility(View.VISIBLE);
                 timertext.setText("0s");
                 textView.setText("Your Score: " + Integer.toString(score) + "/" + Integer.toString(numberofq));
+
             }
         }.start();
 
@@ -87,9 +93,9 @@ public class Main6Activity extends AppCompatActivity {
 
         if (view.getTag().toString().equals(Integer.toString(locationofanswer))) {
             score++;
-            textView.setText("Correct!");
+            textView.setText("Correct Answer!");
         } else {
-            textView.setText("Wrong!");
+            textView.setText("Wrong Answer!");
         }
         numberofq++;
         scoretext.setText(Integer.toString(score) + "/" + Integer.toString(numberofq));
@@ -116,7 +122,14 @@ public class Main6Activity extends AppCompatActivity {
         button=(Button)findViewById(R.id.button);
         scoretext = (TextView) findViewById(R.id.scoretext);
         textView = (TextView) findViewById(R.id.textView);
+        time=findViewById(R.id.time);
+        Score=findViewById(R.id.Score);
         timertext = (TextView) findViewById(R.id.timertext);
+        instruction1=findViewById(R.id.instruction1);
+        instruction2=findViewById(R.id.instruction2);
+        instruction3=findViewById(R.id.instruction3);
+        instruction4=findViewById(R.id.instruction4);
+
         play(findViewById(R.id.button));
 
     }
