@@ -3,53 +3,57 @@ package com.example.initish.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 
-    Button button1,button2,button3,button4,button5,button6;
+    private static final String TAG = "MainActivity";
 
-    public void click(View view){
-
-        switch (Integer.parseInt(view.getTag().toString())){
-
-            case 1:
-                startActivity(new Intent(getApplicationContext(),Main3Activity.class));
-                break;
-            case 2:
-                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
-                break;
-            case 3:
-                startActivity(new Intent(getApplicationContext(), Main4Activity.class));
-                break;
-            case 4:
-                startActivity(new Intent(getApplicationContext(), Main5Activity.class));
-                break;
-            case 5:
-                startActivity(new Intent(getApplicationContext(), Main6Activity.class));
-                break;
-            case 6:
-                startActivity(new Intent(getApplicationContext(), Main7Activity.class));
-
-        }
-        Log.i("Button Tapped", view.getTag().toString());
-    }
-
+    //vars
+    private ArrayList<String> mnames = new ArrayList<>();
+    private ArrayList<String> text = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Android Fun Project");
 
-        button1=(Button)findViewById(R.id.button1);
-        button2=(Button)findViewById(R.id.button2);
-        button3=(Button)findViewById(R.id.button3);
-        button4=(Button)findViewById(R.id.button4);
-        button5=(Button)findViewById(R.id.button5);
-        button6=(Button)findViewById(R.id.button6);
+        getText();
+    }
+
+    private void getText(){
+
+        mnames.add("TIC-TAC-TOE");
+        mnames.add("KNOW YOUR WEATHER");
+        mnames.add("CURRENCY CONVERTER");
+        mnames.add("BRAIN TRAINER");
+        mnames.add("TIMER APP");
+
+        text.add("Challenge your friend to a game of Tic-Tac-Toe");
+        text.add("Enter the city and know its live weather conditions");
+        text.add("Use it to convert dollars to rupees");
+        text.add("Train your brain by solving quick maths problems");
+        text.add("Set the timer and be productive");
+
+        initRecyclerView();
+
+    }
+
+    private void initRecyclerView(){
+        Log.d(TAG, "initRecyclerView: init recyclerview");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mnames, text);
+        recyclerView.setAdapter(adapter);
     }
 }
+
